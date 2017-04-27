@@ -41,7 +41,9 @@ namespace XORfunction
                 new [ ] {0.0}
             };
             // create training set
-            IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);            // train            IMLTrain train = new ResilientPropagation(network, trainingSet);
+            IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
+            // train
+            IMLTrain train = new ResilientPropagation(network, trainingSet);
             int epoch = 1;
             do
             {
