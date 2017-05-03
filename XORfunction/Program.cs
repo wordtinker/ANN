@@ -4,7 +4,12 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
+using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Neural.Networks.Training.Propagation.Manhattan;
+using Encog.Neural.Networks.Training.Propagation.Quick;
+using Encog.Neural.Networks.Training.Propagation.SCG;
+using Encog.Neural.Networks.Training.Lma;
 using System;
 
 namespace XORfunction
@@ -13,7 +18,7 @@ namespace XORfunction
     {
         static void Main(string[] args)
         {
-            // 1 create network
+            // 1 create feedforward network
 
             var network = new BasicNetwork();
             // add input layer with no activation function, one bias neuron and 2 inputs
@@ -42,8 +47,18 @@ namespace XORfunction
             };
             // create training set
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
-            // train
+            // train using some form of backpropagation
+            // backpropagation is best used if we have input and output sets
+            // one of the best is resilient
             IMLTrain train = new ResilientPropagation(network, trainingSet);
+            // other forms of propagation could be used
+            //IMLTrain train = new Backpropagation(network, trainingSet, 0.7, 0.3);
+            //IMLTrain train = new ManhattanPropagation(network, trainingSet, 0.00001);
+            //IMLTrain train = new QuickPropagation(network, trainingSet, 2.0);
+            //IMLTrain train = new ScaledConjugateGradient(network, trainingSet);
+            // and non propagation, sometimes could be better than resilient
+            //IMLTrain train = new LevenbergMarquardtTraining(network, trainingSet);
+
             int epoch = 1;
             do
             {
